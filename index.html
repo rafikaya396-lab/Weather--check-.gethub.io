@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>LearnFlow Pro</title>
+<script src="https://accounts.google.com/gsi/client" async></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;color:white;min-height:100vh}
+.bg{position:fixed;inset:0;z-index:-2;background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364);background-size:400% 400%;animation:g 15s ease infinite}
+@keyframes g{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.float{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.float i{position:absolute;color:rgba(255,255,255,.15);animation:u 20s linear infinite;bottom:-100px;font-size:30px}
+.float i:nth-child(1){left:15%;animation-delay:0s;font-size:40px}
+.float i:nth-child(2){left:35%;animation-delay:2s}
+.float i:nth-child(3){left:55%;animation-delay:1s;font-size:50px}
+.float i:nth-child(4){left:75%;animation-delay:3s}
+.float i:nth-child(5){left:90%;animation-delay:0s;font-size:35px}
+@keyframes u{to{transform:translateY(-100vh) rotate(360deg)}}
+
+nav{position:fixed;top:0;width:100%;background:rgba(0,0,0,.3);backdrop-filter:blur(15px);padding:12px;display:flex;justify-content:space-between;z-index:100}
+nav a{color:white;text-decoration:none;padding:8px 12px;border-radius:20px;font-weight:600}
+nav a:hover{background:rgba(255,255,255,.2)}
+.btn{background:#ff7f50;color:white;border:none;padding:10px 20px;border-radius:25px;cursor:pointer;font-weight:600}
+
+.page{display:none;padding:80px 20px 20px;min-height:100vh;animation:f.5s}
+.page.active{display:block}
+@keyframes f{from{opacity:0}to{opacity:1}}
+.container{max-width:1100px;margin:0 auto}
+.card{background:rgba(255,255,255,.15);backdrop-filter:blur(15px);border-radius:20px;padding:25px;margin:20px 0}
+
+h1{font-size:42px;margin:20px 0;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin:20px 0}
+.stat{text-align:center;padding:20px;border-radius:15px;background:rgba(0,0,0,.3)}
+.stat h3{font-size:36px;color:#ffeb3b}
+.stat i{font-size:40px;margin-bottom:10px;color:#ffeb3b}
+
+.lang{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.lang-card{background:rgba(0,0,0,.3);padding:25px;border-radius:20px;transition:.3s}
+.lang-card:hover{transform:translateY(-8px)}
+.lang-flag{font-size:50px;text-align:center;margin-bottom:15px}
+.quiz{background:rgba(0,0,0,.2);padding:20px;border-radius:15px;margin-top:15px}
+.qbtn{display:block;width:100%;margin:8px 0;padding:12px;background:rgba(255,255,255,.2);border:2px solid white;border-radius:10px;color:white;cursor:pointer;font-size:16px}
+.qbtn:hover{background:rgba(255,255,255,.3)}
+.qbtn.ok{background:#4caf50;border-color:#4caf50}
+.qbtn.no{background:#f44336;border-color:#f44336}
+
+.vid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.vid{background:rgba(0,0,0,.4);border-radius:15px;overflow:hidden}
+.vid iframe{width:100%;height:180px;border:none}
+.vid h4{padding:15px}
+
+.social{display:flex;justify-content:center;gap:20px;margin:25px 0}
+.social a{color:white;font-size:32px;transition:.3s}
+.social a:hover{color:#ff7f50;transform:scale(1.2)}
+
+.leader{max-width:600px;margin:0 auto}
+.leader-row{display:flex;justify-content:space-between;padding:15px;background:rgba(0,0,0,.3);border-radius:15px;margin:10px 0}
+.you{background:linear-gradient(45deg,#ff7f50,#e73c7e)}
+
+@media(max-width:768px){h1{font-size:28px}nav{flex-direction:column;gap:10px}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="float">
+<i class="fa fa-book"></i><i class="fa fa-globe"></i><i class="fa fa-book-open"></i><i class="fa fa-earth-africa"></i><i class="fa fa-graduation-cap"></i>
+</div>
+
+<nav>
+<div>
+<a href="#" onclick="sh('home')"><i class="fa fa-home"></i> Home</a>
+<a href="#" onclick="sh('learn')"><i class="fa fa-book"></i> Learn</a>
+<a href="#" onclick="sh('videos')"><i class="fa fa-play"></i> Videos</a>
+<a href="#" onclick="sh('board')"><i class="fa fa-trophy"></i> Leaderboard</a>
+<a href="#" onclick="sh('contact')"><i class="fa fa-phone"></i> Contact</a>
+</div>
+<div>
+<div id="g_id_onload" data-client_id="123456789-abc.apps.googleusercontent.com" data-callback="log"></div>
+<div class="g_id_signin" data-type="standard"></div>
+<button id="ubtn" class="btn" style="display:none"><i class="fa fa-user"></i> <span id="uname"></span></button>
+</div>
+</nav>
+
+<!-- HOME IN ENGLISH -->
+<div class="page active" id="home">
+<div class="container">
+<h1>🌍 LearnFlow Pro 🌍</h1>
+<p style="text-align:center;font-size:20px;margin-bottom:30px">Master 7 World Languages with Interactive Learning</p>
+
+<div class="grid">
+<div class="stat"><i class="fa fa-star"></i><h3 id="pt">0</h3><p>Total Points</p></div>
+<div class="stat"><i class="fa fa-fire"></i><h3 id="st">0</h3><p>Day Streak</p></div>
+<div class="stat"><i class="fa fa-trophy"></i><h3 id="lv">1</h3><p>Level</p></div>
+<div class="stat"><i class="fa fa-medal"></i><h3 id="bg">0</h3><p>Badges</p></div>
+</div>
+
+<div class="card" style="background:linear-gradient(45deg,#f093fb,#f5576c);text-align:center">
+<h2>🔥 Daily Challenge</h2>
+<p style="font-size:18px;margin:15px 0">Complete 3 quizzes to earn +50 bonus points!</p>
+<div style="width:100%;height:10px;background:rgba(255,255,255,.3);border-radius:5px;margin:15px 0">
+<div id="chp" style="width:0%;height:100%;background:white;border-radius:5px;transition:width.5s"></div>
+</div>
+<p><span id="chc">0</span>/3 Completed</p>
+</div>
+
+<div class="card">
+<h2>🎯 Word of the Day</h2>
+<p style="font-size:26px;margin:15px 0"><strong id="wotd">Bonjour</strong></p>
+<p>Meaning: <span id="wotdM">Good Morning</span></p>
+<button class="btn" onclick="sp()"><i class="fa fa-volume-up"></i> Listen</button>
+</div>
+
+<button class="btn" onclick="sh('learn')" style="display:block;margin:30px auto;font-size:18px">Start Learning <i class="fa fa-arrow-right"></i></button>
+</div>
+</div>
+
+<!-- LEARN + QUIZ IN EACH LANGUAGE -->
+<div class="page" id="learn">
+<div class="container">
+<h1>Choose Your Language</h1>
+<div class="lang">
+
+<div class="lang-card">
+<div class="lang-flag">🇬🇧</div><h2>English</h2>
+<div class="quiz">
+<h3>📝 Quick Quiz:</h3>
+<p>1. "Hello" means?</p>
+<button class="qbtn" onclick="chk(this,true)">مرحبا</button>
+<button class="qbtn" onclick="chk(this,false)">وداعا</button>
+<p>2. "Thank you" means?</p>
+<button class="qbtn" onclick="chk(this,true)">شكرا</button>
+<button class="qbtn" onclick="chk(this,false)">عفوا</button>
+<button class="btn" onclick="speak('Hello','en-US')"><i class="fa fa-volume-up"></i> Pronounce</button>
+</div>
+</div>
+
+<div class="lang-card">
+<div class="lang-flag">🇫🇷</div><h2>Français</h2>
+<div class="quiz">
+<h3>📝 Quiz:</h3>
+<p>1. "Bonjour" means?</p>
+<button class="qbtn" onclick="chk(this,true)">صباح الخير</button>
+<button class="qbtn" onclick="chk(this,false)">مساء الخير</button>
+<p>2. "Merci" means?</p>
+<button class="qbtn" onclick="chk(this,true)">شكرا</button>
+<button class="qbtn" onclick="chk(this,false)">عفوا</button>
+<button class="btn" onclick="speak('Bonjour','fr-FR')"><i class="fa fa-volume-up"></i> Écouter</button>
+</div>
+</div>
+
+<div class="lang-card">
+<div class="lang-flag">🇪🇸</div><h2>Español</h2>
+<div class="quiz">
+<h3>📝 Quiz:</h3>
+<p>1. "Hola" means?</p>
+<button class="qbtn" onclick="chk(this,true)">مرحبا</button>
+<button class="qbtn" onclick="chk(this,false)">وداعا</button>
+<p>2. "Gracias" means?</p>
+<button class="qbtn" onclick="chk(this,true)">شكرا</button>
+<button class="qbtn" onclick="chk(this,false)">عفوا</button>
+<button class="btn" onclick="speak('Hola','es-ES')"><i class="fa fa-volume-up"></i> Escuchar</button>
+</div>
+</div>
+
+<div class="lang-card">
+<div class="lang-flag">🇩🇪</div><h2>Deutsch</h2>
+<div class="quiz">
+<h3>📝 Quiz:</h3>
+<p>1. "Hallo" means?</p>
+<button class="qbtn" onclick="chk(this,true)">مرحبا</button>
+<button class="qbtn" onclick="chk(this,false)">وداعا</button>
+<p>2. "Danke" means?</p>
+<button class="qbtn" onclick="chk(this,true)">شكرا</button>
+<button class="qbtn" onclick="chk(this,false)">عفوا</button>
+<button class="btn" onclick="speak('Hallo','de-DE')"><i class="fa fa-volume-up"></i> Hören</button>
+</div>
+</div>
+
+<div class="lang-card">
+<div class="lang-flag">🇹🇷</div><h2>Türkçe</h2>
+<div class="quiz">
+<h3>📝 Test:</h3>
+<p>1. "Merhaba" means?</p>
+<button class="qbtn" onclick="chk(this,true)">مرحبا</button>
+<button class="qbtn" onclick="chk(this,false)">وداعا</button>
+<p>2. "Teşekkürler" means?</p>
+<button class="qbtn" onclick="chk(this,true)">شكرا</button>
+<button class="qbtn" onclick="chk(this,false)">عفوا</button>
+<button class="btn" onclick="speak('Merhaba','tr-TR')"><i class="fa fa-volume-up"></i> Dinle</button>
+</div>
+</div>
+
+<div class="lang-card">
+<div class="lang-flag">🇰🇷</div><h2>한국어</h2>
+<div class="quiz">
+<h3>📝 퀴즈:</h3>
+<p>1. "안녕하세요" means?</p>
+<button class="qbtn" onclick="chk(this,true)">مرحبا</button>
+<button class="qbtn" onclick="chk(this,false)">وداعا</button>
+<p>2. "감사합니다" means?</p>
+<button class="qbtn" onclick="chk(this,true)">شكرا</button>
+<button class="qbtn" onclick="chk(this,false)">عفوا</button>
+<button class="btn" onclick="speak('안녕하세요','ko-KR')"><i class="fa fa-volume-up"></i> 듣기</button>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- VIDEOS -->
+<div class="page" id="videos">
+<div class="container">
+<h1>📹 Educational Videos</h1>
+<div class="vid-grid">
+<div class="vid"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe><h4>English Basics</h4></div>
+<div class="vid"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe><h4>French from Zero</h4></div>
+<div class="vid"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe><h4>Spanish Conversation</h4></div>
+<div class="vid"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe><h4>German in 30 Min</h4></div>
+</div>
+</div>
+</div>
+
+<!-- LEADERBOARD -->
+<div class="page" id="board">
+<div class="container">
+<h1>🏆 Global Leaderboard</h1>
+<div class="leader card">
+<div class="leader-row"><span>🥇</span><span>Sarah M.</span><span>2,450 ⭐</span></div>
+<div class="leader-row"><span>🥈</span><span>Ahmed K.</span><span>2,180 ⭐</span></div>
+<div class="leader-row"><span>🥉</span><span>Yuki T.</span><span>1,920 ⭐</span></div>
+<div class="leader-row you"><span id="yr">4</span><span id="yn">You</span><span id="yps">0 ⭐</span></div>
+</div>
+</div>
+</div>
+
+<!-- CONTACT + PHONE + INSTAGRAM + SOURCES -->
+<div class="page" id="contact">
+<div class="container">
+<h1>📞 Contact & Resources</h1>
+<div class="card" style="text-align:center">
+<h2><i class="fa fa-phone"></i> Phone Number</h2>
+<p style="font-size:24px;margin:15px 0"><a href="tel:+212600000000" style="color:#ffeb3b">+212 600 000 000</a></p>
+<h2><i class="fab fa-instagram"></i> Instagram</h2>
+<p style="font-size:20px;margin:15px 0"><a href="https://instagram.com/learnflow_pro" target="_blank" style="color:#ffeb3b">@learnflow_pro</a></p>
+<h2><i class="fa fa-envelope"></i> Email</h2>
+<p style="font-size:20px;margin:15px 0"><a href="mailto:info@learnflow.com" style="color:#ffeb3b">info@learnflow.com</a></p>
+<div class="social">
+<a href="https://instagram.com/learnflow_pro" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://wa.me/212600000000" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<a href="https://youtube.com/@learnflow" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="https://t.me/learnflow" target="_blank"><i class="fab fa-telegram"></i></a>
+</div>
+</div>
+
+<div class="card">
+<h2>📚 Trusted Sources</h2>
+<p><i class="fa fa-check"></i> <a href="https://www.duolingo.com" target="_blank" style="color:#ffeb3b">Duolingo</a> - Free Interactive</p>
+<p><i class="fa fa-check"></i> <a href="https://www.bbc.co.uk/learningenglish" target="_blank" style="color:#ffeb3b">BBC Learning</a> - British English</p>
+<p><i class="fa fa-check"></i> <a href="https://www.memrise.com" target="_blank" style="color:#ffeb3b">Memrise</a> - Vocabulary</p>
+<p><i class="fa fa-check"></i> <a href="https://www.busuu.com" target="_blank" style="color:#ffeb3b">Busuu</a> - Native Speakers</p>
+</div>
+</div>
+</div>
+
+<footer>
+<p>© 2026 LearnFlow Pro | <i class="fa fa-phone"></i> +212 600 000 000 | <i class="fab fa-instagram"></i> @learnflow_pro</p>
+</footer>
+
+<script>
+let u=JSON.parse(localStorage.getItem('u'))||{n:'Guest',p:0,l:1,s:0,d:null,b:[],c:0};
+const td=new Date().toDateString();
+if(u.d!==td){if(u.d===new Date(Date.now()-86400000).toDateString())u.s++;else u.s=1;u.d=td;u.c=0;sv()}
+up();
+
+function log(r){
+const p=JSON.parse(atob(r.credential.split('.')[1]));
+u.n=p.name;document.getElementById('ubtn').style.display='inline-block';
+document.querySelector('.g_id_signin').style.display='none';
+if(!u.b.includes('Google')){u.b.push('Google');alert('Welcome '+u.n+'! 🎉')}
+sv()
+}
+
+function sh(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(p).classList.add('active');scrollTo(0,0)}
+
+function chk(btn,ok){
+btn.parentElement.querySelectorAll('.qbtn').forEach(b=>b.disabled=true);
+if(ok){
+btn.classList.add('ok');u.p+=10;u.l=Math.floor(u.p/100)+1;u.c++;
+if(u.p>=50&&!u.b.includes('Beginner'))u.b.push('Beginner');
+if(u.l>=3&&!u.b.includes('Student'))u.b.push('Student');
+if(u.c>=3&&!u.b.includes('Challenger')){u.b.push('Challenger');u.p+=50}
+setTimeout(()=>alert('✅ Correct! +10 points'),200)
+}else{
+btn.classList.add('no');
+setTimeout(()=>alert('❌ Wrong! Try again'),200)
+}
+sv()
+}
+
+function speak(t,l){const u=new SpeechSynthesisUtterance(t);u.lang=l;speechSynthesis.speak(u)}
+function sp(){const w=[{w:'Bonjour',m:'Good Morning',l:'fr-FR'},{w:'Gracias',m:'Thank You',l:'es-ES'},{w:'Danke',m:'Thank You',l:'de-DE'}];const t=w[new Date().getDate()%w.length];document.getElementById('wotd').textContent=t.w;document.getElementById('wotdM').textContent=t.m;speak(t.w,t.l)}
+
+function sv(){localStorage.setItem('u',JSON.stringify(u));up()}
+function up(){
+document.getElementById('uname').textContent=u.n;
+document.getElementById('pt').textContent=u.p;
+document.getElementById('lv').textContent=u.l;
+document.getElementById('st').textContent=u.s;
+document.getElementById('bg').textContent=u.b.length;
+document.getElementById('yn').textContent=u.n;
+document.getElementById('yps').textContent=u.p+' ⭐';
+document.getElementById('chc').textContent=u.c;
+document.getElementById('chp').style.width=(u.c/3*100)+'%';
+if(u.n!=='Guest'){document.getElementById('ubtn').style.display='inline-block';document.querySelector('.g_id_signin').style.display='none'}
+}
+
+sp();
+</script>
+</body>
+  </html>
